@@ -16,18 +16,13 @@ const app = express();
 
 dotenv.config();
 
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-    credentials: true,
-    methods: ["POST", "GET", "DELETE"],
-  })
-);
-
-app.use((req, res, next) => {
-  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
-  next();
-});
+// app.use(
+//   cors({
+//     origin: "http://localhost:3000",
+//     credentials: true,
+//     methods: ["POST", "GET", "DELETE"],
+//   })
+// );
 
 app.get("/", (req, res) => {
   res.send("Hello to Event App API");

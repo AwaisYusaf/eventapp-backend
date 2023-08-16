@@ -7,7 +7,7 @@ export const deleteUser = async (req, res, next) => {
   if (req.userId !== user._id.toString()) {
     return next(createError(403, "You can delete only your account!"));
   }
-  await User.findByIdAndDelete(req.params.id); 
+  await User.findByIdAndDelete(req.params.id);
   res.status(200).send("deleted.");
 };
 export const getUser = async (req, res, next) => {
@@ -17,14 +17,14 @@ export const getUser = async (req, res, next) => {
 };
 
 export const getAllUsers = async (req, res, next) => {
-  try{
+  try {
+    console.log("get all users");
+
     const allUsers = await User.find({});
-    
-    res.json(allUsers)
-    res.send({data:allUsers});
+
+    res.json(allUsers);
+    res.send({ data: allUsers });
+  } catch (err) {
+    console.log(err);
   }
-  
-catch(err){
-  console.log(err);
-}
 };
