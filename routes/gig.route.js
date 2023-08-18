@@ -1,11 +1,20 @@
-import express from "express";
-import {
+// import express from "express";
+// import {
+//   createGig,
+//   deleteGig,
+//   getGig,
+//   getGigs
+// } from "../controllers/gig.controller.js";
+// import { verifyToken } from "../middleware/jwt.js";
+
+const express = require("express");
+const {
   createGig,
   deleteGig,
   getGig,
-  getGigs
-} from "../controllers/gig.controller.js";
-import { verifyToken } from "../middleware/jwt.js";
+  getGigs,
+} = require("../controllers/gig.controller.js");
+const { verifyToken } = require("../middleware/jwt.js");
 
 const router = express.Router();
 
@@ -14,4 +23,4 @@ router.delete("/:id", verifyToken, deleteGig);
 router.get("/single/:id", getGig);
 router.get("/", getGigs);
 
-export default router;
+module.exports = router;

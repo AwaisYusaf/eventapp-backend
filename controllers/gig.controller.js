@@ -1,7 +1,10 @@
-import Gig from "../models/gig.model.js";
-import createError from "../utils/error.js";
+// import Gig from "../models/gig.model.js";
+// import createError from "../utils/error.js";
 
-export const createGig = async (req, res, next) => {
+const Gig = require("../models/gig.model.js");
+const createError = require("../utils/error.js");
+
+const createGig = async (req, res, next) => {
   if (!req.isSeller)
     return next(createError(403, "Only sellers can create a gig!"));
 
@@ -17,7 +20,7 @@ export const createGig = async (req, res, next) => {
     next(err);
   }
 };
-export const deleteGig = async (req, res, next) => {
+const deleteGig = async (req, res, next) => {
   try {
     const gig = await Gig.findById(req.params.id);
     if (gig.userId !== req.userId)
@@ -29,7 +32,7 @@ export const deleteGig = async (req, res, next) => {
     next(err);
   }
 };
-export const getGig = async (req, res, next) => {
+const getGig = async (req, res, next) => {
   try {
     console.log(req.body);
     const gig = await Gig.findById(req.params.id);
@@ -39,7 +42,7 @@ export const getGig = async (req, res, next) => {
     next(err);
   }
 };
-export const getGigs = async (req, res, next) => {
+const getGigs = async (req, res, next) => {
   console.log("GetGigs route called...");
   const q = req.query;
   const filters = {
@@ -55,9 +58,11 @@ export const getGigs = async (req, res, next) => {
   };
   try {
     const gigs = await Gig.find(filters).sort({ [q.sort]: -1 });
-    console.log("Gigs:",gigs)
+    console.log("Gigs:", gigs);
     res.status(200).send(gigs);
   } catch (err) {
     next(err);
   }
 };
+
+module.exports = { createGig, deleteGig, getGig, getGigs };

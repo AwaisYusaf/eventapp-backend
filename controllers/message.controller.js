@@ -1,8 +1,12 @@
-import createError from "../utils/error.js";
-import Message from "../models/message.model.js";
-import Conversation from "../models/conversation.model.js";
+// import createError from "../utils/error.js";
+// import Message from "../models/message.model.js";
+// import Conversation from "../models/conversation.model.js";
 
-export const createMessage = async (req, res, next) => {
+const createError = require("../utils/error.js");
+const Message = require("../models/message.model.js");
+const Conversation = require("../models/conversation.model.js");
+
+const createMessage = async (req, res, next) => {
   const newMessage = new Message({
     conversationId: req.body.conversationId,
     userId: req.userId,
@@ -27,7 +31,7 @@ export const createMessage = async (req, res, next) => {
     next(err);
   }
 };
-export const getMessages = async (req, res, next) => {
+const getMessages = async (req, res, next) => {
   try {
     const messages = await Message.find({ conversationId: req.params.id });
     res.status(200).send(messages);
@@ -35,3 +39,5 @@ export const getMessages = async (req, res, next) => {
     next(err);
   }
 };
+
+module.exports = { createMessage, getMessages };

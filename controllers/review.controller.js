@@ -1,10 +1,15 @@
-import axios from 'axios';
+// import axios from 'axios';
 
-import createError from "../utils/error.js";
-import Review from "../models/review.model.js";
-import Gig from "../models/gig.model.js";
+// import createError from "../utils/error.js";
+// import Review from "../models/review.model.js";
+// import Gig from "../models/gig.model.js";
 
-export const createReview = async (req, res, next) => {
+const axios = require("axios");
+const createError = require("../utils/error.js");
+const Review = require("../models/review.model.js");
+const Gig = require("../models/gig.model.js");
+
+const createReview = async (req, res, next) => {
   if (req.isSeller)
     return next(createError(403, "Sellers can't create a review!"));
 
@@ -39,7 +44,7 @@ export const createReview = async (req, res, next) => {
   }
 };
 
-export const getReviews = async (req, res, next) => {
+const getReviews = async (req, res, next) => {
   try {
     const reviews = await Review.find({ gigId: req.params.gigId });
     res.status(200).send(reviews);
@@ -47,20 +52,21 @@ export const getReviews = async (req, res, next) => {
     next(err);
   }
 };
-export const deleteReview = async (req, res, next) => {
+const deleteReview = async (req, res, next) => {
   try {
   } catch (err) {
     next(err);
   }
 };
 
-
-export const trustpilotrating = async (req, res) => {
+const trustpilotrating = async (req, res) => {
   const sellerId = req.params.sellerId;
-  const apiKey = 'YOUR_TRUSTPILOT_API_KEY';
-  const response = await axios.get(`https://api.trustpilot.com/v1/business-units/${sellerId}/reviews?apikey=${apiKey}`);
+  const apiKey = "YOUR_TRUSTPILOT_API_KEY";
+  const response = await axios.get(
+    `https://api.trustpilot.com/v1/business-units/${sellerId}/reviews?apikey=${apiKey}`
+  );
   const rating = response.data.statistics.trustScore.score;
   res.json({ rating });
-}
+};
 
-
+module.exports = { createReview, getReviews, deleteReview, trustpilotrating };

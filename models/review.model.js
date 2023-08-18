@@ -1,13 +1,12 @@
-import mongoose from "mongoose";
+// import mongoose from "mongoose";
+const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const reviewSchema = new mongoose.Schema({
   title: String,
   content: String,
-  rating: Number
+  rating: Number,
 });
 
 // Define the model for your reviews
-export default mongoose.model('Review', reviewSchema);
-
-
+module.exports = mongoose.model("Review", reviewSchema);

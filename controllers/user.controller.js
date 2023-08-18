@@ -1,7 +1,10 @@
-import User from "../models/user.model.js";
-import createError from "../utils/error.js";
+// import User from "../models/user.model.js";
+// import createError from "../utils/error.js";
 
-export const deleteUser = async (req, res, next) => {
+const User = require("../models/user.model.js");
+const createError = require("../utils/error.js");
+
+const deleteUser = async (req, res, next) => {
   const user = await User.findById(req.params.id);
 
   if (req.userId !== user._id.toString()) {
@@ -10,13 +13,13 @@ export const deleteUser = async (req, res, next) => {
   await User.findByIdAndDelete(req.params.id);
   res.status(200).send("deleted.");
 };
-export const getUser = async (req, res, next) => {
+const getUser = async (req, res, next) => {
   const user = await User.findById(req.params.id);
 
   res.status(200).send(user);
 };
 
-export const getAllUsers = async (req, res, next) => {
+const getAllUsers = async (req, res, next) => {
   try {
     console.log("get all users");
 
@@ -28,3 +31,4 @@ export const getAllUsers = async (req, res, next) => {
     console.log(err);
   }
 };
+module.exports = { deleteUser, getUser, getAllUsers };

@@ -1,8 +1,9 @@
-import createError from "../utils/error.js";
-import Order from "../models/order.model.js";
-import Gig from "../models/gig.model.js";
-import Stripe from "stripe";
-export const intent = async (req, res, next) => {
+// import createError from "../utils/error.js";
+// import Order from "../models/order.model.js";
+// import Gig from "../models/gig.model.js";
+// import Stripe from "stripe";
+
+const intent = async (req, res, next) => {
   const stripe = new Stripe(process.env.STRIPE);
 
   const gig = await Gig.findById(req.params.id);
@@ -32,7 +33,7 @@ export const intent = async (req, res, next) => {
   });
 };
 
-export const getOrders = async (req, res, next) => {
+const getOrders = async (req, res, next) => {
   try {
     const orders = await Order.find({
       ...(req.isSeller ? { sellerId: req.userId } : { buyerId: req.userId }),
@@ -44,7 +45,7 @@ export const getOrders = async (req, res, next) => {
     next(err);
   }
 };
-export const confirm = async (req, res, next) => {
+const confirm = async (req, res, next) => {
   try {
     const orders = await Order.findOneAndUpdate(
       {
@@ -62,3 +63,5 @@ export const confirm = async (req, res, next) => {
     next(err);
   }
 };
+
+module.exports = { intent, getOrders, confirm };
