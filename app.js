@@ -31,11 +31,12 @@ const app = express();
 dotenv.config();
 
 app.use(
-  cors({
-    origin: "https://eventapp-frontend-f37q.vercel.app",
-    credentials: true,
-    methods: ["POST", "GET", "DELETE"],
-  })
+  cors()
+  //   {
+  //   origin: "https://eventapp-frontend-f37q.vercel.app",
+  //   credentials: true,
+  //   methods: ["POST", "GET", "DELETE"],
+  // }
 );
 
 app.get("/", (req, res) => {
